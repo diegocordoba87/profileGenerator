@@ -45,5 +45,41 @@ inquirer
           );
           console.log(newManager);
         });
-   
+    
+} else if (answers.role === "Engineer") {
+    {
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "What is your Engineer's name?",
+            name: "name",
+          },
+          {
+            type: "input",
+            message: "What is your Engineer's ID number",
+            name: "id",
+          },
+          {
+            type: "input",
+            message: "What is your Engineer's email address?",
+            name: "email",
+          },
+          {
+            type: "input",
+            message: "What is your Engineer's github?",
+            name: "github",
+          },
+        ])
+        .then((res) => {
+          const newEngineer = new Engineer(
+            res.name,
+            res.id,
+            res.email,
+            res.github
+          );
+          console.log(newEngineer);
+        });
+    }
+  }
   });
