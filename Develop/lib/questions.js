@@ -81,5 +81,33 @@ inquirer
           console.log(newEngineer);
         });
     }
-  }
+  } else if(answers.role === "Intern"){
+    {
+        inquirer.prompt([
+         {
+             type: "input",
+             message: "What is your intern's name?",
+             name: "name"
+         },
+         {
+             type: "input",
+             message: "What is your intern's ID number",
+             name: "id"
+         },
+         {
+             type: "input",
+             message: "What is your intern's email address?",
+             name: "email"
+         },
+         {
+             type: "input",
+             message: "What is your intern's school?",
+             name: "github"
+         }
+        ]    
+        ).then(res=>{
+            const newIntern = new Intern(res.name, res.id, res.email, res.github)
+            console.log(newIntern)
+        })
+    }
   });
