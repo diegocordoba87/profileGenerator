@@ -2,7 +2,6 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-const questions = require('./lib/questions')
 const path = require("path");
 const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
@@ -11,8 +10,6 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
 const employees = [];
 const initial = ()=> {
     inquirer.prompt([
@@ -20,21 +17,53 @@ const initial = ()=> {
           type: "input",
           message: "What is your manager's name?",
           name: "name",
+          validate: function(answer){
+            if(answer !== ""){
+              return true;
+            } 
+            return "Enter a valid name" 
+          }
         },
         {
           type: "input",
           message: "What is your manager's ID number",
           name: "id",
+          validate: function(answer){
+            const match = answer.match(
+              /^[1-9]\d*$/)
+            if(match){
+              return true;
+            } 
+            return "Enter a valid number" 
+          }
         },
         {
           type: "input",
           message: "What is your manager's email address?",
           name: "email",
+          validate: function(answer){
+            const match = answer.match(
+              /\S+@\S+\.\S+/
+            )
+            if(match){
+              return true;
+            } 
+            return "Enter a valid email" 
+          }
+
         },
         {
           type: "input",
           message: "What is your manager's office number?",
           name: "officeNumber",
+          validate: function(answer){
+            const match = answer.match(
+              /^[1-9]\d*$/)
+            if(match){
+              return true;
+            } 
+            return "Enter a valid number" 
+          }
         },
       ])
       .then((res) => {
@@ -54,7 +83,6 @@ const empQuestions = ()=>{
     name: "role",
   })
   .then((answers) => {
-    console.log(answers.role);
     if(answers.role === "Engineer") {
     {
       inquirer
@@ -63,27 +91,56 @@ const empQuestions = ()=>{
             type: "input",
             message: "What is your Engineer's name?",
             name: "name",
+            validate: function(answer){
+              if(answer!==""){
+                return true;
+              }
+              return "Enter a valid name"
+            }
           },
           {
             type: "input",
             message: "What is your Engineer's ID number",
             name: "id",
+            validate: function(answer){
+              const match = answer.match(
+                /^[1-9]\d*$/
+              )
+              if(match){
+                return true
+              }
+              return "Enter a valid number"
+            }
           },
           {
             type: "input",
             message: "What is your Engineer's email address?",
             name: "email",
+            validate: function(answer){
+              const match = answer.match(
+                /\S+@\S+\.\S+/
+              )
+              if(match){
+                return true
+              }
+              return "Enter a valid email"
+            }
           },
           {
             type: "input",
-            message: "What is your Engineer's github?",
+            message: "What is your Engineer's github username?",
             name: "github",
+            validate: function(answer){
+              if(answer !==""){
+                return true
+              }
+              else "Enter a valid username"
+            }
           },
         ])
         .then((res) => {
           const newEngineer = new Engineer(res.name,res.id,res.email,res.github);
           employees.push(newEngineer);
-          console.log(employees)
           addMore();
         });
     }
@@ -93,28 +150,57 @@ const empQuestions = ()=>{
          {
              type: "input",
              message: "What is your intern's name?",
-             name: "name"
+             name: "name",
+             validate: function(answer){
+               if(answer !==""){
+                 return true
+               }
+               return "Enter a valid name"
+             }
          },
          {
              type: "input",
              message: "What is your intern's ID number",
-             name: "id"
+             name: "id",
+             validate: function(answer){
+               const match = answer.match(
+                 /^[1-9]\d*$/
+               )
+               if(match){
+                 return true
+               }
+               return "Enter a valid number"
+             }
          },
          {
              type: "input",
              message: "What is your intern's email address?",
-             name: "email"
+             name: "email",
+             validate: function(answer){
+               const match = answer.match(
+                 /\S+@\S+\.\S+/              
+               )
+               if(match){
+                 return true
+               }
+               return "Enter a valid email"
+             }
          },
          {
              type: "input",
              message: "What is your intern's school?",
-             name: "github"
+             name: "school",
+             validate: function(answer){
+               if(answer !== ""){
+                 return true
+               }
+               return "Enter a valid school"
+             }
          }
         ]    
         ).then(res=>{
-            const newIntern = new Intern(res.name, res.id, res.email, res.github)
+            const newIntern = new Intern(res.name, res.id, res.email, res.school)
             employees.push(newIntern);
-            console.log(employees)
             addMore();
         })
     }}
@@ -132,7 +218,7 @@ const addMore = ()=>{
             empQuestions()
         }else{
             console.log("we will push your team members to an HTML file!")
-            renderedTeam= render(employees)
+            const renderedTeam= render(employees)
             fs.writeFile(outputPath,renderedTeam,function(err){
                 if(err) throw err
             } )
@@ -143,24 +229,3 @@ const addMore = ()=>{
 
 
 initial()
-
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
