@@ -213,11 +213,11 @@ const addMore = ()=>{
         message: "Do you want to add more team members?",
         name: "addMore",
         default: true
-    }).then((res)=>{
-        if(res.addMore === true){
+    }).then((answer)=>{
+        if(answer.addMore === true){
             empQuestions()
         }else{
-            console.log("we will push your team members to an HTML file!")
+            console.log("We will push your team members to an HTML file! Go to the Output folder to see the resutls!")
             const renderedTeam= render(employees)
             fs.writeFile(outputPath,renderedTeam,function(err){
                 if(err) throw err

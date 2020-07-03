@@ -21,10 +21,11 @@ The team profile generator is a command line application.  The application will 
 
 
 ## Installation
-Clone the repository to your local machine.  Open you command lone and navigate to the folder containing the repo.  ONce you are there,go to the develop folder.  Once in there, type "node app.js". This will take you through the questions necessary to build your team's profile. Once is done, go to the output folder and you will see an HTML file named "team.html".  Open it and you will see the results! 
+Clone the repository to your local machine.  Open you command line and navigate to the folder containing the repo.  Once you are there,go to the develop folder.  Once in there, type "node app.js". This will take you through the questions necessary to build your team's profile. Once it is done, go to the output folder and you will see an HTML file named "team.html".  Open it and you will see the results! 
 
 
 ## Usage 
+
 You can use this to generate a team profile within minutes.
 
 
@@ -44,6 +45,6 @@ No collaboration at this moment, but feel free to add more to it!
 
 ## Questions
 
-If you have any questions pleae direct them to my email address: diegocordoba@gmail.com or contact me via GitHub here: 
+If you have any questions please direct them to my email address: diegocordoba@gmail.com or contact me via GitHub here: 
 https://github.com/diegocordoba87
  
